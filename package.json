@@ -1,0 +1,22 @@
+{
+  "name": "simple-nodejs",
+  "version": "1.0.0",
+  "description": "Just a basic native nodejs project to test n-layers architecture",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarrotIfson/simple-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CarrotIfson/simple-nodejs/issues"
+  },
+  "homepage": "https://github.com/CarrotIfson/simple-nodejs#readme"
+}
