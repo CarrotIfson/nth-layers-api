@@ -1,12 +1,13 @@
 import { parse } from 'node:url'; 
+import { routes } from './routes/heroRoute.js';
 import { DEFAULT_HEADER } from './util/util.js';
 
+const heroRoutes = routes({
+    heroService: {}
+})
+
 const allRoutes = {
-    //heroes:get
-    '/heroes:get': async (request, response) => {  
-        response.write('GET');
-        response.end();
-    },
+    ...heroRoutes,
     // 404 routes
     default: (request, response) => {
         response.writeHead(404, DEFAULT_HEADER); 
@@ -31,7 +32,7 @@ function handlerError(response) {
         console.log('Something bad happened', error.stack)
         response.writeHead(500, DEFAULT_HEADER)
         response.write(JSON.stringify({
-            error: 'internal server error!'
+            error: 'internal server error'
         }))
 
         return response.end()
