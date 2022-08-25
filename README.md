@@ -1,7 +1,8 @@
 # simple-nodejs
-Just a basic native nodejs project to test n-layers architecture 
+Just a basic native nodejs api to try-out n-layers architecture 
 
 src                 --all source code
+
     - entities      --object mappins
     - factories     --instance gens
     - repositories  --data access
@@ -14,10 +15,12 @@ src                 --all source code
     
 
 tests               --all test suites
+
     - integration   --e2e(no app)/tests on users point of view 
     - unit tests    --tests without external connections (db, fileSystem, external APIs)
 
 
-notes:
+notes to self:
+
     - add to package.json
         "type": "module"
