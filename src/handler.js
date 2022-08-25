@@ -11,7 +11,9 @@ const currentDir = dirname(
         import.meta.url
     )
 )
-const filePath = join(currentDir, './../database', 'data.json') 
+const filePath = join(currentDir, './../database', 'data.json')
+
+
 const heroService = generateInstance({
     filePath
 })

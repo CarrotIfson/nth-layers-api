@@ -32,14 +32,15 @@ const routes = ({
         //listen to the event from the request  
         const data = await once(request, 'data')
         const item = JSON.parse(data) 
-        const h = await heroService.findByName(item.name)
+        const {hero, i} = await heroService.findByName(item.name)
         response.writeHead(201, DEFAULT_HEADER)
         response.write(JSON.stringify({
-            result: h,
+            result: hero,
             success: 'Hero found successfully!!',
         })); 
         return response.end();
     } 
+    
     
 })
 

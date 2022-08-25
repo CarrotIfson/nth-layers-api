@@ -54,7 +54,7 @@ test("Hero Integration Test Suite", async(t) => {
     
     const testServerAddress2 = `http://localhost:${testPort}/findhero`
     
-    await t.test('it should find the heroe', async(t) => {
+    await t.test('it should find the hero', async(t) => {
         const data = {
             "name": "Bilbo Baggins"
         }
@@ -76,7 +76,7 @@ test("Hero Integration Test Suite", async(t) => {
             result.success,
             'Hero found successfully!!',
             'it should return a valid text message'
-        )    
+        )   
         assert.ok(
             result.result.id.length > 30,
             'result.id should be a valid uuid'
