@@ -39,6 +39,19 @@ const routes = ({
             success: 'Hero found successfully!!',
         })); 
         return response.end();
+    } ,
+    //delhero:post  
+    '/delhero:post': async (request, response) => {  
+        //listen to the event from the request  
+        const data = await once(request, 'data')
+        const item = JSON.parse(data) 
+        const r = await heroService.deleteByName(item.name)
+        response.writeHead(201, DEFAULT_HEADER)
+        response.write(JSON.stringify({
+            result: r,
+            success: 'Hero deleted successfully!!',
+        })); 
+        return response.end();
     } 
     
     

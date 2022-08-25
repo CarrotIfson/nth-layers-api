@@ -14,4 +14,8 @@ export default class HeroService {
     create(data) {
         return this.heroRepository.create(data)
     }
+
+    deleteByName(heroName) {
+        return this.heroRepository.deleteByName(heroName.toLowerCase())
+    }
 }

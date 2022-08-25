@@ -52,14 +52,13 @@ test("Hero Integration Test Suite", async(t) => {
         assert.ok(result.result.length>0);
     }) 
     
-    const testServerAddress2 = `http://localhost:${testPort}/findhero`
-    
+    const testFindHeroAddress = `http://localhost:${testPort}/findhero`
     await t.test('it should find the hero', async(t) => {
         const data = {
             "name": "Bilbo Baggins"
         }
 
-        const request = await fetch(testServerAddress2, {
+        const request = await fetch(testFindHeroAddress, {
             method: 'POST',
             body: JSON.stringify(data)
             }
@@ -81,6 +80,53 @@ test("Hero Integration Test Suite", async(t) => {
             result.result.id.length > 30,
             'result.id should be a valid uuid'
         )  
+    })
+
+    
+    const testDelHeroAddress = `http://localhost:${testPort}/delhero`
+    await t.test('it should delete the hero', async(t) => { 
+        //insert a new hero
+        let data = {
+            "name": "Frodo Baggins",
+            "age": 33,
+            "title": "Ring Bearer"
+        }
+
+        let request = await fetch(testServerAddress, {
+            method: 'POST',
+            body: JSON.stringify(data)
+            }
+        )
+        //make sure its inserted
+        data = {
+            "name": "Frodo Baggins"
+        }
+        request = await fetch(testFindHeroAddress, {
+            method: 'POST',
+            body: JSON.stringify(data)
+            }
+        ) 
+        let result = await request.json()
+        assert.ok(
+            result.result.id.length > 30,
+            'result.id should be a valid uuid'
+        )  
+        //now delete
+        request = await fetch(testDelHeroAddress, {
+            method: 'POST',
+            body: JSON.stringify(data)
+            }
+        ) 
+        result = await request.json()  
+        assert.ok(result.result == 1)
+        //try removing again
+        request = await fetch(testDelHeroAddress, {
+            method: 'POST',
+            body: JSON.stringify(data)
+            }
+        ) 
+        result = await request.json()  
+        assert.ok(result.result == -1)
     })
     
     //need to close server or else we block the tests

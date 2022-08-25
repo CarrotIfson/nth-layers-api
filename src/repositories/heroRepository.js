@@ -43,13 +43,28 @@ export default class HeroRepository {
         } 
         return {undefined, undefined}
     } 
+
+    async deleteByName(data) {
+        console.log("deleteByName")
+        const {hero, i} = await this.findByName(data)
+        if (i != undefined) {
+            const currentFile = await this.#currentFileContent()
+            currentFile.splice(i,1)
+            await writeFile(
+                this.file,
+                JSON.stringify(currentFile)
+            )
+            return 1
+        }
+        return -1
+    }
  
 }
 
 /* TEST  */
 /*
 const hr = new HeroRepository({
-    file: './../database/data.json'
+    file: './database/data.json'
 })
 
 console.log(
@@ -60,22 +75,9 @@ console.log(
         title: "the Brave"
     })
 )
-*/
-/*
-console.log(
-    await hr.getAllHeroes()
-)*/
-/*
-console.log(
-    await hr.delete({
-        id: 2,
-        name: "Samwise",
-        age: 38,
-        title: "the Brave"
-    })
-)
-*/
-
-/*
-console.log(await hr.findByName('samwise'))
+ 
+ 
+console.log(await hr.getAllHeroes())
+console.log( await hr.deleteByName("Samwise")) 
+console.log(await hr.getAllHeroes())
 */
