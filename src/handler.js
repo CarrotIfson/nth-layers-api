@@ -1,9 +1,22 @@
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { parse } from 'node:url'; 
+import { generateInstance } from './factories/heroFactory.js';
 import { routes } from './routes/heroRoute.js';
 import { DEFAULT_HEADER } from './util/util.js';
 
+
+const currentDir = dirname(
+    fileURLToPath(
+        import.meta.url
+    )
+)
+const filePath = join(currentDir, './../database', 'data.json') 
+const heroService = generateInstance({
+    filePath
+})
 const heroRoutes = routes({
-    heroService: {}
+    heroService
 })
 
 const allRoutes = {

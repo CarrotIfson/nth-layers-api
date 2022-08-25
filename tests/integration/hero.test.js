@@ -11,6 +11,7 @@ test("Hero Integration Test Suite", async(t) => {
     const { server } = await import('../../src/index.js')
 
     const testServerAddress = `http://localhost:${testPort}/heroes`    
+    
     await t.test('it should create a hero', async(t) => {
         const data = {
             "name": "Bilbo Baggins",
@@ -28,7 +29,6 @@ test("Hero Integration Test Suite", async(t) => {
             request.headers.get('content-type'),
             'application/json'
         )
-
         assert.strictEqual(request.status, 201)
       
         const result = await request.json()
@@ -40,10 +40,49 @@ test("Hero Integration Test Suite", async(t) => {
         assert.ok(
             result.hero_id.length > 30,
             'id should be a valid uuid'
-        )
-        
+        ) 
     })
+    
+    await t.test('it should retrieve heroes', async(t) => {
+        const request = await fetch(testServerAddress, {
+            method: 'GET'
+            }
+        )
+        const result = await request.json() 
+        assert.ok(result.result.length>0);
+    }) 
+    
+    const testServerAddress2 = `http://localhost:${testPort}/findhero`
+    
+    await t.test('it should find the heroe', async(t) => {
+        const data = {
+            "name": "Bilbo Baggins"
+        }
 
+        const request = await fetch(testServerAddress2, {
+            method: 'POST',
+            body: JSON.stringify(data)
+            }
+        ) 
+
+        assert.deepStrictEqual(
+            request.headers.get('content-type'),
+            'application/json'
+        )
+        assert.strictEqual(request.status, 201)
+      
+        const result = await request.json()
+        assert.deepStrictEqual(
+            result.success,
+            'Hero found successfully!!',
+            'it should return a valid text message'
+        )    
+        assert.ok(
+            result.result.id.length > 30,
+            'result.id should be a valid uuid'
+        )  
+    })
+    
     //need to close server or else we block the tests
     //server.close() receives a callback  
     await promisify(server.close.bind(server))()
